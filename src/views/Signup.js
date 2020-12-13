@@ -93,6 +93,7 @@ const Signup = ({ history }) => {
                   <FormInput
                     name="password"
                     label="Password"
+                    type="password"
                     required={true}
                     errorobj={errors}
                   />

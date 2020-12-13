@@ -59,59 +59,58 @@ const Login = ({ history }) => {
     return <Redirect to="/booking" />;
   }
   return (
-    <>
-      <MenuBar>
-        <Grid container justify="center" className={classes.grid}>
-          <FormProvider {...formMethods}>
-            <form className={classes.form}>
-              <Grid container alignItems="center" justify="center" spacing={2}>
-                <Grid item xs={12}>
-                  {errorMessage && (
-                    <Alert severity="error"> {errorMessage} </Alert>
-                  )}
-                </Grid>
-                <Grid item xs={12}>
-                  <FormInput
-                    name="email"
-                    label="Email"
-                    required={true}
-                    errorobj={errors}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormInput
-                    name="password"
-                    label="Password"
-                    required={true}
-                    errorobj={errors}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    className={classes.fullWidth}
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSubmit(onSubmit)}
-                  >
-                    Log in
-                  </Button>
-                  <p className={classes.textCenter}>or</p>
-                  <Button
-                    className={classes.fullWidth}
-                    variant="contained"
-                    color="secondary"
-                    type="button"
-                    onClick={signInWithGoogle}
-                  >
-                    Sign in With Google
-                  </Button>
-                </Grid>
+    <MenuBar>
+      <Grid container justify="center" className={classes.grid}>
+        <FormProvider {...formMethods}>
+          <form className={classes.form}>
+            <Grid container alignItems="center" justify="center" spacing={2}>
+              <Grid item xs={12}>
+                {errorMessage && (
+                  <Alert severity="error"> {errorMessage} </Alert>
+                )}
               </Grid>
-            </form>
-          </FormProvider>
-        </Grid>
-      </MenuBar>
-    </>
+              <Grid item xs={12}>
+                <FormInput
+                  name="email"
+                  label="Email"
+                  required={true}
+                  errorobj={errors}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormInput
+                  name="password"
+                  label="Password"
+                  type="password"
+                  required={true}
+                  errorobj={errors}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  className={classes.fullWidth}
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit(onSubmit)}
+                >
+                  Log in
+                </Button>
+                <p className={classes.textCenter}>or</p>
+                <Button
+                  className={classes.fullWidth}
+                  variant="contained"
+                  color="secondary"
+                  type="button"
+                  onClick={signInWithGoogle}
+                >
+                  Sign in With Google
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </FormProvider>
+      </Grid>
+    </MenuBar>
   );
 };
 

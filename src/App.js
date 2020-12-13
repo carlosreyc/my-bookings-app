@@ -9,7 +9,6 @@ import { AuthProvider } from './components/Auth';
 function App() {
   return (
     <AuthProvider>
-
       <Router>
         <div>
           <Route exact path="/" component={Login} />

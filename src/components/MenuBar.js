@@ -15,10 +15,13 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import CollectionsBookmarkIcon from "@material-ui/icons/CollectionsBookmark";
+import EventIcon from "@material-ui/icons/Event";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { AuthContext } from "./Auth";
+import { LoaderStateContext } from "./Loader";
 
 const drawerWidth = 240;
 
@@ -86,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MenuBar = (props) => {
   const { user } = useContext(AuthContext);
+  const { isLoading } = useContext(LoaderStateContext);
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -150,6 +154,7 @@ const MenuBar = (props) => {
           </Typography>
           {topBarActions}
         </Toolbar>
+        {isLoading && <LinearProgress />}
       </AppBar>
       <Drawer
         className={classes.drawer}
@@ -174,9 +179,16 @@ const MenuBar = (props) => {
           <ListItem button component={Link} to="/booking">
             <ListItemIcon>
               {" "}
-              <InboxIcon />
+              <CollectionsBookmarkIcon />
             </ListItemIcon>
             <ListItemText primary="Bookings" />
+          </ListItem>
+          <ListItem button component={Link} to="/events">
+            <ListItemIcon>
+              {" "}
+              <EventIcon />
+            </ListItemIcon>
+            <ListItemText primary="Events" />
           </ListItem>
         </List>
         <Divider />

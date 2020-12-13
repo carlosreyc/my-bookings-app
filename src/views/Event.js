@@ -1,10 +1,12 @@
-import React from 'react'
-// import PropTypes from 'prop-types'
+import React from "react";
+import MenuBar from "../components/MenuBar";
 
 const Event = () => {
-    return (
-        <h1>Events</h1>
-    )
-}
+  return (
+    <MenuBar>
+      <h1>Events</h1>
+    </MenuBar>
+  );
+};
 
 export default Event;

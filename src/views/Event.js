@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import Grid from "@material-ui/core/Grid";
 import MenuBar from "../components/MenuBar";
 import EventDataGrid from "../elements/EventDataGrid";
@@ -16,14 +16,7 @@ const Event = () => {
   const [filter, setFilter] = useState(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const handleClose = () => {
-    setAddModalOpen(false);
-  };
   const dispatch = useContext(LoaderDispatchContext);
-
-  const handlePageChange = (params) => {
-    setPage(params.page);
-  };
 
   useEffect(() => {
     const getEvents = async () => {
@@ -38,7 +31,7 @@ const Event = () => {
   useEffect(() => {
     let active = true;
 
-    (async () => {
+    const getNewRows = async () => {
       setLoading(true);
       const newRows = await Axios({
         baseURL: events,
@@ -58,12 +51,22 @@ const Event = () => {
 
       setEventsData(newRows.data);
       setLoading(false);
-    })();
+    };
+
+    getNewRows();
 
     return () => {
       active = false;
     };
   }, [page, filter]);
+
+  const handleClose = useCallback(() => {
+    setAddModalOpen(false);
+  }, []);
+
+  const handlePageChange = useCallback((params) => {
+    setPage(params.page);
+  }, []);
 
   const handleDeleteEvent = async (id) => {
     handleClose();
@@ -100,6 +103,11 @@ const Event = () => {
     }
   };
 
+  const handleFilter = useCallback((value) => {
+    setFilter(value);
+    setPage(1);
+  }, []);
+
   return (
     <MenuBar>
       <Grid container>
@@ -115,7 +123,7 @@ const Event = () => {
           />
         </Title>
         <Grid item xs={12}>
-          <TableFilter handleFilter={setFilter} />
+          <TableFilter handleFilter={handleFilter} />
         </Grid>
         <EventDataGrid
           data={eventsData}

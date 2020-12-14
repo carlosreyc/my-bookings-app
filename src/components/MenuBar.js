@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback, useState } from "react";
 import clsx from "clsx";
 import app from "../firebase";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -92,15 +92,15 @@ const MenuBar = (props) => {
   const { isLoading } = useContext(LoaderStateContext);
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleDrawerOpen = () => {
+  const handleDrawerOpen = useCallback(() => {
     setOpen(true);
-  };
+  }, []);
 
-  const handleDrawerClose = () => {
+  const handleDrawerClose = useCallback(() => {
     setOpen(false);
-  };
+  }, []);
 
   const topBarActions = user ? (
     <Button
@@ -205,4 +205,4 @@ const MenuBar = (props) => {
   );
 };
 
-export default MenuBar;
+export default React.memo(MenuBar);

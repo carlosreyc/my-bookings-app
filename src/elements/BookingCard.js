@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -38,18 +38,18 @@ const BookingCard = (props) => {
   const reservationDate = moment.unix(reservation).format("DD/MM/YYYY");
   const classes = useStyles();
 
-  const handleOpen = () => {
+  const handleOpen = useCallback(() => {
     setOpen(true);
-  };
+  }, []);
 
-  const handleAcceptDelete = () => {
+  const handleAcceptDelete = useCallback(() => {
     setOpen(false);
     handleDeleteBooking(bookingId);
-  };
+  }, [bookingId, handleDeleteBooking]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpen(false);
-  };
+  }, []);
 
   return (
     <>
@@ -81,7 +81,7 @@ const BookingCard = (props) => {
       </Card>
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle id="form-dialog-title">Add Booking</DialogTitle>
+        <DialogTitle>Delete Booking</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Do you want to remove this booking?
@@ -108,4 +108,4 @@ BookingCard.propTypes = {
   handleDeleteBooking: PropTypes.func.isRequired,
 };
 
-export default BookingCard;
+export default React.memo(BookingCard);

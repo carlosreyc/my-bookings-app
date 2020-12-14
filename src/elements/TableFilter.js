@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import FormInput from "../controls/Input";
@@ -6,11 +6,19 @@ import { useForm, FormProvider } from "react-hook-form";
 const TableFilter = (props) => {
   const { handleFilter } = props;
   const formMethods = useForm();
-  const { handleSubmit, errors } = formMethods;
+  const { handleSubmit, errors, reset } = formMethods;
 
-  const onSubmit = (data) => {
-    handleFilter(data.name);
-  };
+  const onSubmit = useCallback(
+    (data) => {
+      handleFilter(data.name);
+    },
+    [handleFilter]
+  );
+
+  const handleClear = useCallback(() => {
+    handleFilter(null);
+    reset();
+  }, [handleFilter, reset]);
   return (
     <Grid container style={{ marginTop: 16 }}>
       <FormProvider {...formMethods}>
@@ -25,7 +33,7 @@ const TableFilter = (props) => {
                 variant="contained"
                 style={{ width: "100%" }}
                 type="button"
-                onClick={() => handleFilter(null)}
+                onClick={handleClear}
               >
                 clear
               </Button>
@@ -47,4 +55,4 @@ const TableFilter = (props) => {
   );
 };
 
-export default TableFilter;
+export default React.memo(TableFilter);

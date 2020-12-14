@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import Grid from "@material-ui/core/Grid";
 import MenuBar from "../components/MenuBar";
 import BookingCard from "../elements/BookingCard";
@@ -31,9 +31,9 @@ const Booking = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setAddModalOpen(false);
-  };
+  }, []);
 
   useEffect(() => {
     const getBookings = async () => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -32,21 +32,20 @@ const EventDataGrid = (props) => {
   const [idToDelete, setIdToDelete] = useState(null);
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = (id) => {
+  const handleClickOpen = useCallback((id) => {
     setIdToDelete(id);
     setOpen(true);
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpen(false);
-  };
+  }, []);
 
-  const sendToDeleteAndClose = () => {
+  const sendToDeleteAndClose = useCallback(() => {
     handleDeleteEvent(idToDelete);
     setIdToDelete(null);
     setOpen(false);
-  };
-
+  }, [handleDeleteEvent, idToDelete]);
   return (
     <div className={classes.dataGrid}>
       <DataGrid

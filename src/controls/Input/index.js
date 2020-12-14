@@ -8,7 +8,6 @@ const FormInput = (props) => {
   let isError = false;
   let errorMessage = "";
   if (errorobj && errorobj.hasOwnProperty(name)) {
-    console.log(errorobj);
     isError = true;
     errorMessage = errorobj[name].message;
   }

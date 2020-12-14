@@ -19,7 +19,6 @@ function loaderReducer(state, action) {
 
 export const LoaderProvider = ({ children }) => {
   const [state, dispatch] = useReducer(loaderReducer, { isLoading: false });
-  console.log(dispatch);
   return (
     <LoaderStateContext.Provider value={state}>
       <LoaderDispatchContext.Provider value={dispatch}>

@@ -1,22 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 import MenuBar from "../components/MenuBar";
-import Typography from "@material-ui/core/Typography";
 import BookingCard from "../elements/BookingCard";
 import { booking, events, users } from "../api/endpoints";
 import Axios from "axios";
 import { makeStyles } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import BookingAddForm from "../elements/BookingAddForm";
 import moment from "moment";
 import { LoaderDispatchContext } from "../components/Loader";
+import Title from "../elements/Title";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -33,18 +25,14 @@ const useStyles = makeStyles((theme) => ({
 const Booking = () => {
   const classes = useStyles();
   const dispatch = useContext(LoaderDispatchContext);
-  const [open, setOpen] = useState(false);
   const [bookings, setBookings] = useState([]);
   const [usersData, setUsersData] = useState([]);
   const [eventsData, setEventsData] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const [addModalOpen, setAddModalOpen] = useState(false);
 
   const handleClose = () => {
-    setOpen(false);
+    setAddModalOpen(false);
   };
 
   useEffect(() => {
@@ -111,36 +99,19 @@ const Booking = () => {
   return (
     <MenuBar>
       <Grid container>
-        <Grid item xs={10} lg={11}>
-          <Typography variant="h4" className={classes.title}>
-            Bookings{" "}
-          </Typography>
-        </Grid>
-        <Grid item xs={2} lg={1}>
-          <Fab color="primary" onClick={handleClickOpen}>
-            <AddIcon />
-          </Fab>
-        </Grid>
-
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle id="form-dialog-title">Add Booking</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Please fill out this form to make your reservation come true.
-            </DialogContentText>
-            <BookingAddForm
-              events={eventsData}
-              users={usersData}
-              errorMessage={errorMessage}
-              onSubmitBooking={onSubmitBooking}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <Title
+          mainText="Bookings"
+          ctxText="Please fill out this form to make your reservation come true."
+          open={addModalOpen}
+          setOpen={setAddModalOpen}
+        >
+          <BookingAddForm
+            events={eventsData}
+            users={usersData}
+            errorMessage={errorMessage}
+            onSubmitBooking={onSubmitBooking}
+          />
+        </Title>
 
         <Grid container spacing={2} className={classes.cardContainers}>
           {bookings &&

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Typography from "@material-ui/core/Typography";
@@ -21,13 +21,13 @@ const Title = ({ children, ...props }) => {
   const { mainText, ctxText, open, setOpen } = props;
   const classes = useStyles();
 
-  const handleClickOpen = () => {
+  const handleClickOpen = useCallback(() => {
     setOpen(true);
-  };
+  }, [setOpen]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpen(false);
-  };
+  }, [setOpen]);
   return (
     <>
       <Grid item xs={10} lg={11}>

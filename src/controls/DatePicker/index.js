@@ -9,9 +9,15 @@ import moment from "moment";
 import "moment/locale/es";
 moment.locale("es");
 
-function FormDatePicker(props) {
+const FormDatePicker = (props) => {
   const { control } = useFormContext();
-  const { name, label } = props;
+  const { name, label, errorobj } = props;
+  let isError = false;
+  let errorMessage = "";
+  if (errorobj && errorobj.hasOwnProperty(name)) {
+    isError = true;
+    errorMessage = errorobj[name].message;
+  }
 
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -24,6 +30,8 @@ function FormDatePicker(props) {
             variant="inline"
             format="DD/MM/YYYY"
             label={label}
+            error={isError}
+            helperText={errorMessage}
           />
         }
         control={control}
@@ -32,6 +40,6 @@ function FormDatePicker(props) {
       />
     </MuiPickersUtilsProvider>
   );
-}
+};
 
 export default FormDatePicker;

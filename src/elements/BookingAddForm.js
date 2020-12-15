@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
 
 const schema = yup.object().shape({
   userId: yup.string().required(),
-  reservation: yup.date().required(),
-  eventId: yup.number().required(),
+  reservation: yup.date().required().nullable(),
+  eventId: yup.string().required().nullable(),
 });
 
 const BookingAddForm = React.memo((props) => {
@@ -40,6 +40,7 @@ const BookingAddForm = React.memo((props) => {
     resolver: yupResolver(schema),
     defaultValues: {
       reservation: null,
+      eventId: null,
     },
   });
   const { handleSubmit, errors } = formMethods;
@@ -70,7 +71,12 @@ const BookingAddForm = React.memo((props) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <FormDatePicker name="reservation" label="Reservation" />
+              <FormDatePicker
+                name="reservation"
+                label="Reservation"
+                required={true}
+                errorobj={errors}
+              />
             </Grid>
             <Grid item xs={12}>
               <Button

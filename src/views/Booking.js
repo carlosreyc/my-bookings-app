@@ -89,7 +89,7 @@ const Booking = () => {
         data: mappedData,
       });
       dispatch({ type: "LOADING_OFF" });
-      setBookings([...bookings, newBooking.data]);
+      setBookings([newBooking.data, ...bookings]);
       handleClose();
     } catch (error) {
       dispatch({ type: "LOADING_OFF" });
